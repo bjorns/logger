@@ -4,11 +4,21 @@
 <web-app>
   <display-name>Log Printer</display-name>
   <servlet>
-    <servlet-name>LogServlet</servlet-name>
+    <servlet-name>log</servlet-name>
     <servlet-class>example.catalina.LogServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>cometd</servlet-name>
+    <servlet-class>org.mortbay.cometd.continuation.ContinuationCometdServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
   <servlet-mapping>
-    <servlet-name>LogServlet</servlet-name>
+    <servlet-name>log</servlet-name>
     <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>cometd</servlet-name>
+    <url-pattern>/cometd/*</url-pattern>
   </servlet-mapping>
 </web-app>

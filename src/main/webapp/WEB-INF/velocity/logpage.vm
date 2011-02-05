@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <script type="text/javascript" src="../dojo.js"></script>
+    <script type="text/javascript">
+      dojo.require("dojo.io.cometd");
+
+      cometd.init({}, "cometd");
+
+      cometd.subscribe("/hello/world", false, "publishHandler");
+
+      publishHandler = function(msg) {
+        alert(msg.data.test);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>catalina.out</h1>
+    <pre>
+      $log
+   </pre>       
+  </body>
+</html>
