@@ -25,9 +25,12 @@ public class LogServlet extends HttpServlet {
 
             LOGGER.info("Reading logfile " + logFile);
             InputStream is = new FileInputStream(logFile);
+
             int avail = is.available();
 
-            is.skip(avail - 80 * 80);
+            if ((avail - 20 * 80 * 80) > 0) {
+                is.skip(avail - 20 * 80 * 80);
+            }
 
             byte[] data = new byte[is.available()];
             is.read(data);

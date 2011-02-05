@@ -1,11 +1,6 @@
 package example.catalina.config;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProcessInfo {
@@ -21,51 +16,55 @@ public class ProcessInfo {
     private static final int ELAPSED_CPU_USAGE = 6;
     private static final int COMMAND = 7;
 
-    private int uid;
+    private String uid;
     private int pid;
     private int parentPid;
     private int recentCpuUsage;
-    private Date startTime;
+    private String startTime;
     private String tty;
-    private Date elapsedCpuUsage;
+    private String elapsedCpuUsage;
     private ArrayList<String> command;
 
     public ProcessInfo(String line) {
-        DateFormat formatter = new SimpleDateFormat("MM:mm.ss");
-
         String[] parts = line.split(" ");
         int pos = 0;
         for (String part : parts) {
             if (part != null && !part.equals("")) {
                 switch (pos) {
                 case UID:
-                    uid = Integer.valueOf(part);
+                    uid = part;
                     break;
                 case PID:
-                    pid = Integer.valueOf(part);
+                    try {
+                        pid = Integer.valueOf(part);
+                    } catch (NumberFormatException e) {
+                        LOGGER.warning("Could not parse pid " + part + " as integer.");
+                    }
+
                     break;
                 case PARENT_PID:
-                    parentPid = Integer.valueOf(part);
+                    try {
+                        parentPid = Integer.valueOf(part);
+                    } catch (NumberFormatException e) {
+                        LOGGER.warning("Could not parse parent pid " + part + " as integer.");
+                    }
+
                     break;
                 case RECENT_CPU_USAGE:
-                    recentCpuUsage = Integer.valueOf(part);
+                    try {
+                        recentCpuUsage = Integer.valueOf(part);
+                    } catch (NumberFormatException e) {
+                    }
+
                     break;
                 case START_TIME:
-                    try {
-                        startTime = formatter.parse(part);
-                    } catch (ParseException e) {
-                        LOGGER.log(Level.WARNING, "Could not parse " + part, e);
-                    }
+                    startTime = part;
                     break;
                 case TTY:
                     tty = part;
                     break;
                 case ELAPSED_CPU_USAGE:
-                    try {
-                        startTime = formatter.parse(part);
-                    } catch (ParseException e) {
-                        LOGGER.log(Level.WARNING, "Could not parse " + part, e);
-                    }
+                    elapsedCpuUsage = part;
                     break;
                 case COMMAND:
                     command = new ArrayList<String>();
@@ -80,7 +79,7 @@ public class ProcessInfo {
         }
     }
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
@@ -96,7 +95,7 @@ public class ProcessInfo {
         return recentCpuUsage;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
@@ -104,7 +103,7 @@ public class ProcessInfo {
         return tty;
     }
 
-    public Date getElapsedCpuUsage() {
+    public String getElapsedCpuUsage() {
         return elapsedCpuUsage;
     }
 
