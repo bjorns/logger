@@ -20,24 +20,21 @@ public class StaticFileServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.info("=== loading " + getServletContext().getRealPath("/")
-                    + req.getRequestURI().replace("/catalina", ""));
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         InputStream file = null;
         try {
-            file = getServletContext().getResourceAsStream(req.getRequestURI().replace("/catalina", ""));
+            file = getServletContext().getResourceAsStream(request.getRequestURI().replace(request.getContextPath(), ""));
             if (file == null) {
-                resp.setStatus(404);
+                response.setStatus(404);
                 return;
             }
             byte[] data = new byte[file.available()];
 
             file.read(data);
 
-            resp.setContentType("application/javascript");
-            resp.getOutputStream().write(data);
-            resp.setStatus(200);
+            response.setContentType(this.getServletContext().getMimeType(request.getRequestURI()));
+            response.getOutputStream().write(data);
+            response.setStatus(200);
         } catch (IOException e) {
             LOGGER.log(Level.INFO, "Test.", e);
         } finally {

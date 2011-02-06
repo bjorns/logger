@@ -1,6 +1,7 @@
 package example.catalina;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -63,34 +64,23 @@ public class LogServlet extends HttpServlet {
             LogFileFinder logFinder = new LogFileFinder(Runtime.getRuntime());
 
             List<String> logs = logFinder.getLogs();
-            if (logs.size() == 0) {
-                response.setStatus(503);
-                response.getOutputStream().write((new String("No tomcat process found.")).getBytes());
-                return;
-            }
-            String firstLog = logs.get(0);
-
-            LOGGER.info("Reading logfile " + firstLog);
-            InputStream is = new FileInputStream(firstLog);
-
-            int avail = is.available();
-
-            if ((avail - 20 * 80 * 80) > 0) {
-                is.skip(avail - 20 * 80 * 80);
-            }
-
-            byte[] data = new byte[is.available()];
-            is.read(data);
 
             context = new VelocityContext();
             context.put("name", new String("Velocity"));
-            context.put("log", new String(data));
-            Template template = null;
+            context.put("contextPath", request.getContextPath());
 
-            template = engine.getTemplate(logpage);
-            StringWriter stringWriter = new StringWriter();
-            template.merge(context, stringWriter);
-            response.getOutputStream().write(stringWriter.toString().getBytes("iso-8859-1"));
+            if (logs.size() == 0) {
+                response.setStatus(503);
+                context.put("log", "No tomcat process found.");
+            } else {
+                response.setStatus(200);
+
+                context.put("log", extractLogData(logs));
+
+            }
+
+            byte[] pageData = mergeTemplate(logpage, context);
+            response.getOutputStream().write(pageData);
 
         } catch (ConfigException e) {
             LOGGER.log(Level.WARNING, "An error occurred.", e);
@@ -106,4 +96,29 @@ public class LogServlet extends HttpServlet {
 
     }
 
+    private byte[] mergeTemplate(String logpage, VelocityContext context2) throws ResourceNotFoundException,
+        ParseErrorException, Exception {
+        Template template = engine.getTemplate(logpage);
+        StringWriter stringWriter = new StringWriter();
+        template.merge(context, stringWriter);
+
+        return stringWriter.toString().getBytes("iso-8859-1");
+    }
+
+    private String extractLogData(List<String> logs) throws FileNotFoundException, IOException {
+        String firstLog = logs.get(0);
+
+        LOGGER.info("Reading logfile " + firstLog);
+        InputStream is = new FileInputStream(firstLog);
+
+        int avail = is.available();
+
+        if ((avail - 20 * 80 * 80) > 0) {
+            is.skip(avail - 20 * 80 * 80);
+        }
+
+        byte[] data = new byte[is.available()];
+        is.read(data);
+        return new String(data);
+    }
 }
