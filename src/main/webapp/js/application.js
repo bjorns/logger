@@ -42,6 +42,19 @@ dojo.addOnLoad(function()
         }
     }
 
+    function appendLine(node,txt) {
+        node.appendChild(document.createTextNode(txt + '\n'));
+    }
+
+    function scrollToBottom(){
+        dh = document.body.scrollHeight
+        ch = document.body.clientHeight
+        if(dh > ch) {
+            moveme = dh - ch;
+            window.scrollTo(0, moveme);
+        }
+    }
+
     // Function invoked when first contacting the server and
     // when the server has lost the state of this client
     function _metaHandshake(handshake)
@@ -52,10 +65,13 @@ dojo.addOnLoad(function()
             {
                 cometd.subscribe('/logupdate', function(message)
                 {
-                    dojo.byId('body').innerHTML += '<div>Server Says: ' + message.data.greeting + '</div>';
+                    if (message.data.update) {
+                        appendLine(dojo.byId('log'), message.data.update);
+                        scrollToBottom();
+                    }
                 });
                 // Publish on a service channel since the message is for the server only
-                cometd.publish('/service/logupdate', { name: 'World' });
+                cometd.publish('/service/logupdate', {});
             });
         }
     }

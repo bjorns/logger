@@ -13,9 +13,9 @@
   <body>
     <h1>catalina.out</h1>
     <div id="body"></div>
-    
-    <pre>
-      $log
-   </pre>       
+    #if($error)
+      <p>$error</p>
+    #end    
+    <pre id="log"></pre>       
   </body>
 </html>

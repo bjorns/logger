@@ -1,9 +1,6 @@
 package example.catalina;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Properties;
@@ -71,11 +68,11 @@ public class LogServlet extends HttpServlet {
 
             if (logs.size() == 0) {
                 response.setStatus(503);
-                context.put("log", "No tomcat process found.");
+                context.put("error", "No tomcat process found.");
             } else {
                 response.setStatus(200);
 
-                context.put("log", extractLogData(logs));
+                // context.put("log", extractLogData(logs));
 
             }
 
@@ -103,22 +100,5 @@ public class LogServlet extends HttpServlet {
         template.merge(context, stringWriter);
 
         return stringWriter.toString().getBytes("iso-8859-1");
-    }
-
-    private String extractLogData(List<String> logs) throws FileNotFoundException, IOException {
-        String firstLog = logs.get(0);
-
-        LOGGER.info("Reading logfile " + firstLog);
-        InputStream is = new FileInputStream(firstLog);
-
-        int avail = is.available();
-
-        if ((avail - 20 * 80 * 80) > 0) {
-            is.skip(avail - 20 * 80 * 80);
-        }
-
-        byte[] data = new byte[is.available()];
-        is.read(data);
-        return new String(data);
     }
 }
