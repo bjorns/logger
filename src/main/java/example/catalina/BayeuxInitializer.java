@@ -13,7 +13,7 @@ public class BayeuxInitializer extends GenericServlet {
     @Override
     public void init() throws ServletException {
         BayeuxServer bayeux = (BayeuxServer) getServletContext().getAttribute(BayeuxServer.ATTRIBUTE);
-        new HelloService(bayeux);
+        new LogUpdateService(bayeux);
     }
 
     @Override

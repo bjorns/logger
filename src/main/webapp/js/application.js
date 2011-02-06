@@ -50,12 +50,12 @@ dojo.addOnLoad(function()
         {
             cometd.batch(function()
             {
-                cometd.subscribe('/hello', function(message)
+                cometd.subscribe('/logupdate', function(message)
                 {
                     dojo.byId('body').innerHTML += '<div>Server Says: ' + message.data.greeting + '</div>';
                 });
                 // Publish on a service channel since the message is for the server only
-                cometd.publish('/service/hello', { name: 'World' });
+                cometd.publish('/service/logupdate', { name: 'World' });
             });
         }
     }
@@ -67,7 +67,6 @@ dojo.addOnLoad(function()
     });
 
     var cometURL = location.protocol + "//" + location.host + config.contextPath + "/cometd";
-    cometd.configure = function(x) {}
     cometd.configure({
         url: cometURL,
         logLevel: 'debug'
