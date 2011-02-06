@@ -30,7 +30,6 @@ public class LogFileFinder {
                 logDir = logDir.replaceFirst("\\$\\{catalina\\.home\\}", catalinaHome);
 
                 String logFile = logDir + "/catalina.out";
-                LOGGER.info("Found logfile " + logFile);
                 tomcatLogs.add(logFile);
             }
         }
@@ -56,6 +55,7 @@ public class LogFileFinder {
                 return arg.substring(new String(prefix).length());
             }
         }
+        LOGGER.warning("Could not find variable " + variable);
         throw new ConfigException("Could not find variable " + variable);
     }
 

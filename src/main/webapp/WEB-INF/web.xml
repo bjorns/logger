@@ -21,7 +21,7 @@
   </servlet>
   <servlet>
     <servlet-name>initializer</servlet-name>
-    <servlet-class>example.catalina.BayeuxInitializer</servlet-class>
+    <servlet-class>example.catalina.service.BayeuxInitializer</servlet-class>
     <load-on-startup>3</load-on-startup>
   </servlet>
   <servlet>

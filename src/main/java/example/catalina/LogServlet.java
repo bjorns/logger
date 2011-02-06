@@ -47,7 +47,6 @@ public class LogServlet extends HttpServlet {
             engine.setApplicationAttribute("javax.servlet.ServletContext", config.getServletContext());
             engine.init(getVelocityProperties());
         } catch (Exception e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }

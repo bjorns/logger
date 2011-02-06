@@ -43,7 +43,7 @@ dojo.addOnLoad(function()
     }
 
     function appendLine(node,txt) {
-        node.appendChild(document.createTextNode(txt + '\n'));
+        node.appendChild(document.createTextNode(txt));
     }
 
     function scrollToBottom(){
@@ -57,12 +57,10 @@ dojo.addOnLoad(function()
 
     // Function invoked when first contacting the server and
     // when the server has lost the state of this client
-    function _metaHandshake(handshake)
-    {
+    function _metaHandshake(handshake) {
         if (handshake.successful === true)
         {
-            cometd.batch(function()
-            {
+            cometd.batch(function() {
                 cometd.subscribe('/logupdate', function(message)
                 {
                     if (message.data.update) {
@@ -71,7 +69,7 @@ dojo.addOnLoad(function()
                     }
                 });
                 // Publish on a service channel since the message is for the server only
-                cometd.publish('/service/logupdate', {});
+                cometd.publish('/service/logupdate', {'disconnect': false});
             });
         }
     }
