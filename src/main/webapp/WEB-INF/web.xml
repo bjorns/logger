@@ -11,7 +11,7 @@
   
   <servlet>
     <servlet-name>log</servlet-name>
-    <servlet-class>example.catalina.LogServlet</servlet-class>
+    <servlet-class>example.catalina.VelocityServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>

@@ -2,7 +2,6 @@ package example.catalina;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,10 +20,9 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
 import example.catalina.config.ConfigException;
-import example.catalina.config.LogFileFinder;
 
-public class LogServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(LogServlet.class.getName());
+public class VelocityServlet extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(VelocityServlet.class.getName());
 
     private VelocityContext context = null;
     private VelocityEngine engine = null;
@@ -57,23 +55,9 @@ public class LogServlet extends HttpServlet {
 
         try {
 
-            LogFileFinder logFinder = new LogFileFinder(Runtime.getRuntime());
-
-            List<String> logs = logFinder.getLogs();
-
             context = new VelocityContext();
             context.put("name", new String("Velocity"));
             context.put("contextPath", request.getContextPath());
-
-            if (logs.size() == 0) {
-                response.setStatus(503);
-                context.put("error", "No tomcat process found.");
-            } else {
-                response.setStatus(200);
-
-                // context.put("log", extractLogData(logs));
-
-            }
 
             byte[] pageData = mergeTemplate(logpage, context);
             response.getOutputStream().write(pageData);
