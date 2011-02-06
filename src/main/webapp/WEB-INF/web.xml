@@ -9,7 +9,12 @@
   </servlet>
   <servlet>
     <servlet-name>cometd</servlet-name>
-    <servlet-class>org.mortbay.cometd.continuation.ContinuationCometdServlet</servlet-class>
+    <servlet-class>example.catalina.MyCometdServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>static</servlet-name>
+    <servlet-class>example.catalina.StaticFileServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
 
@@ -20,5 +25,9 @@
   <servlet-mapping>
     <servlet-name>cometd</servlet-name>
     <url-pattern>/cometd/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>static</servlet-name>
+    <url-pattern>/static/*</url-pattern>
   </servlet-mapping>
 </web-app>

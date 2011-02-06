@@ -1,12 +1,12 @@
 <html>
   <head>
-    <script type="text/javascript" src="../dojo.js"></script>
+    <script type="text/javascript" src="static/js/dojo.js"></script>
     <script type="text/javascript">
       dojo.require("dojo.io.cometd");
 
       cometd.init({}, "cometd");
 
-      cometd.subscribe("/hello/world", false, "publishHandler");
+      cometd.subscribe("/catalina/hello/world", false, "publishHandler");
 
       publishHandler = function(msg) {
         alert(msg.data.test);
@@ -14,6 +14,9 @@
     </script>
   </head>
   <body>
+    <input type="button"
+       onclick="cometd.publish('/catalina/hello/world', { test: 'hello world' } )"
+       value="Click Me!">
     <h1>catalina.out</h1>
     <pre>
       $log
