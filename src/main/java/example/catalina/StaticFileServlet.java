@@ -35,6 +35,7 @@ public class StaticFileServlet extends HttpServlet {
 
             file.read(data);
 
+            resp.setContentType("application/javascript");
             resp.getOutputStream().write(data);
             resp.setStatus(200);
         } catch (IOException e) {

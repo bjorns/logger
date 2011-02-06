@@ -3,31 +3,48 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 <web-app>
   <display-name>Log Printer</display-name>
+  
+  <filter>
+    <filter-name>continuation</filter-name>
+    <filter-class>org.eclipse.jetty.continuation.ContinuationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>continuation</filter-name>
+    <url-pattern>/cometd/*</url-pattern>
+  </filter-mapping>
+  
   <servlet>
     <servlet-name>log</servlet-name>
     <servlet-class>example.catalina.LogServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
     <servlet-name>cometd</servlet-name>
-    <servlet-class>example.catalina.MyCometdServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
+    <servlet-class>org.cometd.server.CometdServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>initializer</servlet-name>
+    <servlet-class>example.catalina.BayeuxInitializer</servlet-class>
+    <load-on-startup>3</load-on-startup>
   </servlet>
   <servlet>
     <servlet-name>static</servlet-name>
     <servlet-class>example.catalina.StaticFileServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
+    <load-on-startup>4</load-on-startup>
   </servlet>
-
-  <servlet-mapping>
-    <servlet-name>log</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
+  
+  
   <servlet-mapping>
     <servlet-name>cometd</servlet-name>
     <url-pattern>/cometd/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>log</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>static</servlet-name>
-    <url-pattern>/static/*</url-pattern>
+    <url-pattern>/js/*</url-pattern>
   </servlet-mapping>
 </web-app>
