@@ -47,11 +47,11 @@ dojo.addOnLoad(function()
     }
 
     function scrollToBottom(){
-        dh = document.body.scrollHeight
-        ch = document.body.clientHeight
-        if(dh > ch) {
-            moveme = dh - ch;
-            window.scrollTo(0, moveme);
+        documentHeight = document.body.scrollHeight
+        clientHeight = document.body.clientHeight
+        if(documentHeight > clientHeight && locked) {
+            moveTo = documentHeight - clientHeight;
+            window.scrollTo(0, moveTo);
         }
     }
 
@@ -74,6 +74,14 @@ dojo.addOnLoad(function()
         }
     }
 
+
+    locked = true;
+    window.onscroll = function () {
+        documentHeight = document.body.scrollHeight
+        clientHeight = document.body.clientHeight
+        locked = window.pageYOffset ==  documentHeight - clientHeight;
+    }
+
     // Disconnect when the page unloads
     dojo.addOnUnload(function()
     {
@@ -88,6 +96,5 @@ dojo.addOnLoad(function()
 
     cometd.addListener('/meta/handshake', _metaHandshake);
     cometd.addListener('/meta/connect', _metaConnect);
-
     cometd.handshake();
 });
