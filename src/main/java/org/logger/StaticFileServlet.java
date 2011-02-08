@@ -1,4 +1,4 @@
-package example.catalina;
+package org.logger;
 
 import java.io.IOException;
 import java.io.InputStream;

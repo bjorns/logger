@@ -1,4 +1,4 @@
-package example.catalina.config;
+package org.logger.config;
 
 public class ConfigException extends Exception {
 

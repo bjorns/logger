@@ -1,4 +1,4 @@
-package example.catalina.config;
+package org.logger.config;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;

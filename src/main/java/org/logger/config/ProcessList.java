@@ -1,4 +1,4 @@
-package example.catalina.config;
+package org.logger.config;
 
 import java.io.BufferedReader;
 import java.io.IOException;

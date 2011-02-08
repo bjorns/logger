@@ -1,4 +1,4 @@
-package example.catalina.service;
+package org.logger.service;
 
 import java.io.IOException;
 
@@ -8,8 +8,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.cometd.bayeux.server.BayeuxServer;
+import org.logger.config.TomcatLogFileFinder;
 
-import example.catalina.config.TomcatLogFileFinder;
 
 public class BayeuxInitializer extends GenericServlet {
     @Override

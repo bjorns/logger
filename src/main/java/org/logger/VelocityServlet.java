@@ -1,4 +1,4 @@
-package example.catalina;
+package org.logger;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -18,8 +18,8 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.logger.config.ConfigException;
 
-import example.catalina.config.ConfigException;
 
 public class VelocityServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(VelocityServlet.class.getName());

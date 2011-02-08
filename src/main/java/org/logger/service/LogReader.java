@@ -1,4 +1,4 @@
-package example.catalina.service;
+package org.logger.service;
 
 import java.io.File;
 import java.io.RandomAccessFile;

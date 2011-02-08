@@ -1,4 +1,4 @@
-package example.catalina.service;
+package org.logger.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.cometd.bayeux.Message;
 import org.cometd.bayeux.server.BayeuxServer;
 import org.cometd.bayeux.server.ServerSession;
 import org.cometd.server.AbstractService;
+import org.logger.config.LogFileFinder;
 
-import example.catalina.config.LogFileFinder;
 
 public class LogUpdateService extends AbstractService implements LogReaderDelegate {
     private static final Logger LOGGER = Logger.getLogger(LogUpdateService.class.getName());

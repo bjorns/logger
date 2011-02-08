@@ -11,7 +11,7 @@
   
   <servlet>
     <servlet-name>log</servlet-name>
-    <servlet-class>example.catalina.VelocityServlet</servlet-class>
+    <servlet-class>org.logger.VelocityServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
@@ -21,12 +21,12 @@
   </servlet>
   <servlet>
     <servlet-name>initializer</servlet-name>
-    <servlet-class>example.catalina.service.BayeuxInitializer</servlet-class>
+    <servlet-class>org.logger.service.BayeuxInitializer</servlet-class>
     <load-on-startup>3</load-on-startup>
   </servlet>
   <servlet>
     <servlet-name>static</servlet-name>
-    <servlet-class>example.catalina.StaticFileServlet</servlet-class>
+    <servlet-class>org.logger.StaticFileServlet</servlet-class>
     <load-on-startup>4</load-on-startup>
   </servlet>
   
