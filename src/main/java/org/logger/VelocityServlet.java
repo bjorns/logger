@@ -20,7 +20,6 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.logger.config.ConfigException;
 
-
 public class VelocityServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(VelocityServlet.class.getName());
 
@@ -59,6 +58,8 @@ public class VelocityServlet extends HttpServlet {
             context.put("name", new String("Velocity"));
             context.put("contextPath", request.getContextPath());
 
+            String serviceName = getReqeustedServiceName(request);
+            context.put("serviceName", serviceName);
             byte[] pageData = mergeTemplate(logpage, context);
             response.getOutputStream().write(pageData);
 
@@ -74,6 +75,23 @@ public class VelocityServlet extends HttpServlet {
             LOGGER.log(Level.WARNING, "Unexpected error loading " + logpage, e);
         }
 
+    }
+
+    private String getReqeustedServiceName(HttpServletRequest request) {
+        final String DEFAULT_SERVICE = "tomcat";
+
+        if (request.getRequestURI().equals(request.getContextPath() + "/")) {
+            return DEFAULT_SERVICE;
+        }
+
+        String[] uri = request.getRequestURI().split("/");
+        String lastPart = uri[uri.length - 1];
+        String serviceName = DEFAULT_SERVICE;
+        if (!lastPart.equals("")) {
+            serviceName = lastPart;
+        }
+
+        return serviceName;
     }
 
     private byte[] mergeTemplate(String logpage, VelocityContext context2) throws ResourceNotFoundException,

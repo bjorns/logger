@@ -41,11 +41,11 @@
     <url-pattern>/cometd/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>log</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
     <servlet-name>static</servlet-name>
     <url-pattern>/js/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>log</servlet-name>
+    <url-pattern>/*</url-pattern>
   </servlet-mapping>
 </web-app>

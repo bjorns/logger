@@ -61,7 +61,7 @@ dojo.addOnLoad(function()
         if (handshake.successful === true)
         {
             cometd.batch(function() {
-                cometd.subscribe('/logupdate', function(message)
+                cometd.subscribe(CONFIG.serviceName, function(message)
                 {
                     if (message.data.update) {
                         appendLine(dojo.byId('log'), message.data.update);
@@ -69,7 +69,7 @@ dojo.addOnLoad(function()
                     }
                 });
                 // Publish on a service channel since the message is for the server only
-                cometd.publish('/service/logupdate', {'disconnect': false});
+                cometd.publish('/service' + CONFIG.serviceName, {'disconnect': false});
             });
         }
     }

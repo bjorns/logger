@@ -8,15 +8,17 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.cometd.bayeux.server.BayeuxServer;
+import org.logger.config.PolopolyIndexserverLogFileFinder;
 import org.logger.config.TomcatLogFileFinder;
-
 
 public class BayeuxInitializer extends GenericServlet {
     @Override
     public void init() throws ServletException {
         BayeuxServer bayeux = (BayeuxServer) getServletContext().getAttribute(BayeuxServer.ATTRIBUTE);
 
-        new LogUpdateService(bayeux, TomcatLogFileFinder.class);
+        new LogUpdateService(bayeux, TomcatLogFileFinder.class, "tomcat");
+        new LogUpdateService(bayeux, PolopolyIndexserverLogFileFinder.class, "indexserver");
+
     }
 
     @Override

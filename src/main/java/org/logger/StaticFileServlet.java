@@ -22,8 +22,10 @@ public class StaticFileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         InputStream file = null;
+        String filename = null;
         try {
-            file = getServletContext().getResourceAsStream(request.getRequestURI().replace(request.getContextPath(), ""));
+            filename = request.getRequestURI().replace(request.getContextPath(), "");
+            file = getServletContext().getResourceAsStream(filename);
             if (file == null) {
                 response.setStatus(404);
                 return;
@@ -36,7 +38,7 @@ public class StaticFileServlet extends HttpServlet {
             response.getOutputStream().write(data);
             response.setStatus(200);
         } catch (IOException e) {
-            LOGGER.log(Level.INFO, "Test.", e);
+            LOGGER.log(Level.WARNING, "Failed to open file " + filename, e);
         } finally {
             if (file != null)
                 file.close();
