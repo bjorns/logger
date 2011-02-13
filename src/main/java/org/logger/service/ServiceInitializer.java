@@ -11,7 +11,7 @@ import org.cometd.bayeux.server.BayeuxServer;
 import org.logger.config.PolopolyIndexserverLogFileFinder;
 import org.logger.config.TomcatLogFileFinder;
 
-public class BayeuxInitializer extends GenericServlet {
+public class ServiceInitializer extends GenericServlet {
     @Override
     public void init() throws ServletException {
         BayeuxServer bayeux = (BayeuxServer) getServletContext().getAttribute(BayeuxServer.ATTRIBUTE);
