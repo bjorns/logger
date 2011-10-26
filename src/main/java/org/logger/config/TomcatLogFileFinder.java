@@ -21,25 +21,35 @@ public class TomcatLogFileFinder extends LogFileFinder {
             if (isTomcat(process)) {
                 String catalinaBase = getCatalinaBase(process);
                 String catalinaHome = getCatalinaHome(process);
-                Properties loggingProperties = getLoggingProperties(process);
+                LOGGER.info("Located tomcat home at " + catalinaHome);
+                String path = getVariableFromProcess("java.util.logging.config.file", process);
+                Properties loggingProperties = getLoggingProperties(path);
 
                 String logDir = loggingProperties.getProperty("1catalina.org.apache.juli.FileHandler.directory");
 
-                logDir = logDir.replaceFirst("\\$\\{catalina\\.base\\}", catalinaBase);
+                if (logDir != null) {
+                    logDir = logDir.replaceFirst("\\$\\{catalina\\.base\\}", catalinaBase);
 
-                logDir = logDir.replaceFirst("\\$\\{catalina\\.home\\}", catalinaHome);
+                    logDir = logDir.replaceFirst("\\$\\{catalina\\.home\\}", catalinaHome);
 
-                String logFile = logDir + "/catalina.out";
-                tomcatLogs.add(logFile);
+                    String logFile = logDir + "/catalina.out";
+                    tomcatLogs.add(logFile);
+                } else {
+                    LOGGER
+                        .warning("Expected to find file handler statement (1catalina.org.apache.juli.FileHandler.directory=) in "
+                                 + path + " but failed.");
+                }
             }
         }
         logs = tomcatLogs;
     }
 
-    private Properties getLoggingProperties(ProcessInfo process) throws ConfigException {
-        String path = getVariableFromProcess("java.util.logging.config.file", process);
+    private Properties getLoggingProperties(String path) throws ConfigException {
+
+        LOGGER.info("Looking for logging.properties in " + path);
         Properties loggingProperties = new Properties();
         try {
+
             loggingProperties.load(new FileReader(path));
             return loggingProperties;
         } catch (Exception e) {

@@ -17,7 +17,7 @@ public class LogReader implements Runnable {
     public LogReader(String logname, LogReaderDelegate delegate, Object userData) {
         this.logfile = new File(logname);
         if (logfile != null) {
-            this.filePointer = logfile.length();
+            this.filePointer = logfile.length() - 2000;
         }
         this.userData = userData;
         this.delegate = delegate;

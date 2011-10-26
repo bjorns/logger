@@ -9,6 +9,7 @@ import javax.servlet.ServletResponse;
 
 import org.cometd.bayeux.server.BayeuxServer;
 import org.logger.config.PolopolyIndexserverLogFileFinder;
+import org.logger.config.PolopolyXmlserverLogFileFinder;
 import org.logger.config.TomcatLogFileFinder;
 
 public class ServiceInitializer extends GenericServlet {
@@ -18,7 +19,7 @@ public class ServiceInitializer extends GenericServlet {
 
         new LogUpdateService(bayeux, TomcatLogFileFinder.class, "tomcat");
         new LogUpdateService(bayeux, PolopolyIndexserverLogFileFinder.class, "indexserver");
-
+        new LogUpdateService(bayeux, PolopolyXmlserverLogFileFinder.class, "xmlserver");
     }
 
     @Override
