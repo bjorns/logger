@@ -1,4 +1,4 @@
-package org.logger.service;
+package com.polopoly.ps.log.service;
 
 import java.io.File;
 import java.io.RandomAccessFile;

@@ -1,4 +1,4 @@
-package org.logger.service;
+package com.polopoly.ps.log.service;
 
 import java.io.IOException;
 
@@ -8,9 +8,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.cometd.bayeux.server.BayeuxServer;
-import org.logger.config.PolopolyIndexserverLogFileFinder;
-import org.logger.config.PolopolyXmlserverLogFileFinder;
-import org.logger.config.TomcatLogFileFinder;
+
+import com.polopoly.ps.log.config.PolopolyIndexserverLogFileFinder;
+import com.polopoly.ps.log.config.PolopolyXmlserverLogFileFinder;
+import com.polopoly.ps.log.config.TomcatLogFileFinder;
 
 public class ServiceInitializer extends GenericServlet {
     @Override

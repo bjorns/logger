@@ -1,4 +1,4 @@
-package org.logger.config;
+package com.polopoly.ps.log.config;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;

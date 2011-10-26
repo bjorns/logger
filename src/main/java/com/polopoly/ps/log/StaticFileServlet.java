@@ -1,4 +1,4 @@
-package org.logger;
+package com.polopoly.ps.log;
 
 import java.io.IOException;
 import java.io.InputStream;
